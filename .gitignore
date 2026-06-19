@@ -1,0 +1,17 @@
+node_modules
+/.next
+/out
+/build
+.env
+.env.local
+.env*.local
+*.pem
+npm-debug.log*
+.DS_Store
+next-env.d.ts
+/coverage
+
+# Service worker generado por serwist
+/public/sw.js
+/public/sw.js.map
+/public/swe-worker-*.js

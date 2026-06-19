@@ -1,0 +1,256 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0a0612;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Sensación nativa: sin resaltado azul al tocar, sin auto-zoom de texto */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: #f5e9ff;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    /* Evita el "rebote" elástico del scroll, como una app nativa */
+    overscroll-behavior-y: none;
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(255, 79, 216, 0.12), transparent 42%),
+      radial-gradient(circle at 85% 8%, rgba(34, 211, 238, 0.1), transparent 38%),
+      linear-gradient(180deg, #0a0612 0%, #120a1f 100%);
+    background-attachment: fixed;
+  }
+}
+
+/* ===== Scrollbar kawaii ===== */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0612;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff4fd8, #a855f7);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff2d95, #7c3aed);
+}
+::selection {
+  background: rgba(255, 79, 216, 0.35);
+  color: #fff;
+}
+
+@layer components {
+  /* Tarjeta de vidrio (glassmorphism) — base de toda la UI */
+  .glass {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(168, 85, 247, 0.04)
+    );
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(124, 58, 237, 0.18);
+  }
+  .glass-strong {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 79, 216, 0.06)
+    );
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  /* Texto con gradiente neón */
+  .text-gradient {
+    background: linear-gradient(120deg, #ff4fd8, #a855f7, #22d3ee);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Borde con gradiente (truco mask) */
+  .gradient-border {
+    position: relative;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, #ff4fd8, #a855f7, #22d3ee);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  /* ===== Componentes de la app (lenguaje visual del portafolio) ===== */
+  .card {
+    @apply rounded-2xl glass;
+  }
+  .btn-neon {
+    @apply rounded-xl bg-gradient-to-r from-neon-pink to-neon-purple px-5 py-2.5
+      font-semibold text-white shadow-glow transition-transform hover:scale-105
+      active:scale-95 disabled:opacity-50 disabled:hover:scale-100;
+  }
+  .btn-ghost {
+    @apply rounded-xl glass px-5 py-2.5 font-medium text-[#f5e9ff]
+      transition hover:border-neon-pink/60 hover:shadow-glow;
+  }
+  .input {
+    @apply w-full rounded-xl border border-white/15 bg-ink2/70 px-4 py-2.5
+      text-[#f5e9ff] placeholder-white/30 outline-none transition
+      focus:border-neon-pink focus:shadow-glow;
+  }
+
+  /* Contenido de lectura (bloques de cada lección) */
+  .prose-cyber p {
+    @apply my-3 leading-relaxed text-[#f5e9ff]/90;
+  }
+  .prose-cyber code.inline {
+    @apply rounded bg-neon-pink/15 px-1.5 py-0.5 font-mono text-sm text-neon-pink;
+  }
+}
+
+@layer utilities {
+  .glow-text {
+    text-shadow: 0 0 18px rgba(255, 79, 216, 0.55), 0 0 40px rgba(168, 85, 247, 0.35);
+  }
+  /* alias usado en la app */
+  .neon-text {
+    text-shadow: 0 0 18px rgba(255, 79, 216, 0.55), 0 0 40px rgba(168, 85, 247, 0.35);
+  }
+  .glow-pink {
+    box-shadow: 0 0 24px rgba(255, 79, 216, 0.45);
+  }
+  /* Safe-areas para notch / barra de gestos (PWA en standalone) */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .h-safe-bottom {
+    height: env(safe-area-inset-bottom);
+  }
+  /* Carrusel sin barra de scroll visible (estilo app) */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Rompe el contenedor centrado y ocupa todo el ancho de la ventana */
+  .full-bleed {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+  /* Rejilla cyberpunk de fondo */
+  .cyber-grid {
+    background-image: linear-gradient(rgba(168, 85, 247, 0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168, 85, 247, 0.12) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  }
+}
+
+/* ===== Barra de navegación curva (móvil) ===== */
+/* Glow pulsante del ícono activo */
+@keyframes nav-pulse {
+  0%,
+  100% {
+    box-shadow: 0 6px 18px rgba(124, 58, 237, 0.55), 0 0 14px rgba(255, 79, 216, 0.55);
+  }
+  50% {
+    box-shadow: 0 6px 24px rgba(34, 211, 238, 0.45), 0 0 26px rgba(255, 79, 216, 0.9);
+  }
+}
+.nav-active-glow {
+  animation: nav-pulse 2.4s ease-in-out infinite;
+}
+/* Brillo que barre el botón activo (shining) */
+@keyframes nav-shine {
+  0% {
+    transform: translateX(-180%) skewX(-14deg);
+  }
+  55%,
+  100% {
+    transform: translateX(360%) skewX(-14deg);
+  }
+}
+.nav-shine {
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  animation: nav-shine 2.8s ease-in-out infinite;
+}
+
+/* Notas musicales del gatito al hacer hover */
+.cat-note {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: note-float 1.4s ease-out infinite;
+}
+.cat-note-2 {
+  animation-delay: 0.5s;
+}
+@keyframes note-float {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.6);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(1.1);
+  }
+}
+
+/* Respeta usuarios con reduce-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
