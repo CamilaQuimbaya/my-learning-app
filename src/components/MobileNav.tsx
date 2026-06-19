@@ -124,8 +124,11 @@ export default function MobileNav() {
     <>
       {/* ===== Header compacto ===== */}
       <header className="fixed inset-x-0 top-0 z-40 lg:hidden">
-        <div className="flex h-14 items-center gap-2.5 border-b border-white/5 bg-ink2/70 px-3 backdrop-blur-xl">
-          {back ? (
+        {/* pt-safe empuja el contenido por debajo de la barra de estado del
+            celu (notch/hora/wifi/batería) cuando la app está instalada */}
+        <div className="pt-safe bg-ink2/75 backdrop-blur-xl">
+          <div className="flex h-14 items-center gap-2.5 px-3">
+            {back ? (
             <Link
               href={back}
               aria-label="Volver"
@@ -169,13 +172,14 @@ export default function MobileNav() {
               )}
             </span>
           </Link>
+          </div>
+          {/* Línea neón inferior (brillo) */}
+          <div className="h-px bg-gradient-to-r from-transparent via-neon-pink/50 to-transparent" />
         </div>
-        {/* Línea neón inferior (brillo) */}
-        <div className="h-px bg-gradient-to-r from-transparent via-neon-pink/50 to-transparent" />
       </header>
 
       {/* ===== Barra de tabs curva ===== */}
-      <nav className="pb-safe fixed inset-x-0 bottom-0 z-40 lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-40 lg:hidden">
         <div ref={wrapRef} className="relative" style={{ height: BAR_H }}>
           {/* Forma curva de la barra (SVG con notch deslizante) */}
           {width > 0 && (

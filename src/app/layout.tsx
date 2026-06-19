@@ -65,10 +65,18 @@ export default async function RootLayout({
               <MobileNav />
             </>
           )}
-          <div className={isAuthed ? "pb-24 lg:pb-0 lg:pl-[260px]" : ""}>
+          <div
+            className={
+              isAuthed
+                ? "pb-[calc(env(safe-area-inset-bottom)+6rem)] lg:pb-0 lg:pl-[260px]"
+                : ""
+            }
+          >
             <main
               className={`mx-auto max-w-[1600px] px-4 pb-8 sm:px-6 ${
-                isAuthed ? "pt-16 lg:pt-8" : "pt-8"
+                isAuthed
+                  ? "pt-[calc(env(safe-area-inset-top)+4.25rem)] lg:pt-8"
+                  : "pt-[calc(env(safe-area-inset-top)+2rem)]"
               }`}
             >
               {children}

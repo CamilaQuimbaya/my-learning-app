@@ -220,6 +220,30 @@ html {
   animation: nav-shine 2.8s ease-in-out infinite;
 }
 
+/* Bottom-sheet (guía de instalación en iPhone) */
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.animate-sheet-up {
+  animation: sheet-up 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.25s ease-out;
+}
+
 /* Notas musicales del gatito al hacer hover */
 .cat-note {
   opacity: 0;
