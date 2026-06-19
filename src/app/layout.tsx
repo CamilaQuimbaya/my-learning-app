@@ -66,11 +66,7 @@ export default async function RootLayout({
             </>
           )}
           <div
-            className={
-              isAuthed
-                ? "pb-[calc(env(safe-area-inset-bottom)+6rem)] lg:pb-0 lg:pl-[260px]"
-                : ""
-            }
+            className={isAuthed ? "pb-24 lg:pb-0 lg:pl-[260px]" : ""}
           >
             <main
               className={`mx-auto max-w-[1600px] px-4 pb-8 sm:px-6 ${

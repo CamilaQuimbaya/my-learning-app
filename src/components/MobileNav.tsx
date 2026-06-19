@@ -193,8 +193,8 @@ export default function MobileNav() {
             >
               <defs>
                 <linearGradient id="navFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stopColor="#1b1030" />
-                  <stop offset="1" stopColor="#120a1f" />
+                  <stop offset="0" stopColor="#251649" />
+                  <stop offset="1" stopColor="#1a0f2e" />
                 </linearGradient>
                 <linearGradient id="navRim" x1="0" y1="0" x2="1" y2="0">
                   <stop offset="0" stopColor="#ff4fd8" />
@@ -248,8 +248,6 @@ export default function MobileNav() {
             })}
           </div>
         </div>
-        {/* Relleno sólido para la safe-area (home indicator) */}
-        <div className="h-safe-bottom bg-[#120a1f]" />
       </nav>
     </>
   );
